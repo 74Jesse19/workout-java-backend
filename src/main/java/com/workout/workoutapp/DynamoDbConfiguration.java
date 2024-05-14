@@ -3,7 +3,6 @@ package com.workout.workoutapp;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -27,9 +26,6 @@ public class DynamoDbConfiguration {
 
     @Value("${aws.dynamodb.region}")
     private String region;
-
-//    @Value("${aws.dynamodb.endpoint}")
-//    private String endpoint;
 
     // this is an interface to provide AWS creds
     private AWSCredentialsProvider awsDynamoDBCredentials() {
