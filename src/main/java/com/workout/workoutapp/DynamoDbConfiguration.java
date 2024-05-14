@@ -18,17 +18,13 @@ import org.springframework.context.annotation.Primary;
         dynamoDBMapperConfigRef = "dynamoDBMapperConfig",
         basePackages = {"com.workout.workoutapp"})
 public class DynamoDbConfiguration {
-    @Value("${aws.dynamodb.accessKey}")
-    private String accessKey;
-
-    @Value("${aws.dynamodb.secretKey}")
-    private String secretKey;
-
     @Value("${aws.dynamodb.region}")
     private String region;
 
     // this is an interface to provide AWS creds
     private AWSCredentialsProvider awsDynamoDBCredentials() {
+        String accessKey = System.getenv("AWS_ACCESS_KEY_ID");
+        String secretKey = System.getenv("AWS_SECRET_ACCESS_KEY");
         return new AWSStaticCredentialsProvider(
                 new BasicAWSCredentials(accessKey, secretKey));
     }
@@ -58,7 +54,6 @@ public class DynamoDbConfiguration {
     @Bean
     public AmazonDynamoDB amazonDynamoDB() {
         return AmazonDynamoDBClientBuilder.standard()
-//                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region))
                 .withCredentials(awsDynamoDBCredentials()).build();
     }
 }
