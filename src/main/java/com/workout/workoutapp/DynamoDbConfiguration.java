@@ -1,8 +1,5 @@
 package com.workout.workoutapp;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -21,13 +18,13 @@ public class DynamoDbConfiguration {
     @Value("${aws.dynamodb.region}")
     private String region;
 
-    // this is an interface to provide AWS creds
-    private AWSCredentialsProvider awsDynamoDBCredentials() {
-        String accessKey = System.getenv("AWS_ACCESS_KEY_ID");
-        String secretKey = System.getenv("AWS_SECRET_ACCESS_KEY");
-        return new AWSStaticCredentialsProvider(
-                new BasicAWSCredentials(accessKey, secretKey));
-    }
+    // this is an interface to provide AWS creds to run locally
+//    private AWSCredentialsProvider awsDynamoDBCredentials() {
+//        String accessKey = System.getenv("AWS_ACCESS_KEY_ID");
+//        String secretKey = System.getenv("AWS_SECRET_ACCESS_KEY");
+//        return new AWSStaticCredentialsProvider(
+//                new BasicAWSCredentials(accessKey, secretKey));
+//    }
 
     @Primary
     @Bean
@@ -50,10 +47,16 @@ public class DynamoDbConfiguration {
     }
 
 
-    //DB client
+    //DB client for local use UNCOMMENT
+//    @Bean
+//    public AmazonDynamoDB amazonDynamoDB() {
+//        return AmazonDynamoDBClientBuilder.standard()
+//                .withCredentials(awsDynamoDBCredentials()).build();
+//    }
+
+//    DB client
     @Bean
     public AmazonDynamoDB amazonDynamoDB() {
-        return AmazonDynamoDBClientBuilder.standard()
-                .withCredentials(awsDynamoDBCredentials()).build();
+        return AmazonDynamoDBClientBuilder.standard().build();
     }
 }

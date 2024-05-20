@@ -10,6 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://35.174.171.29")
 public class WorkoutsController {
 
     @Autowired
